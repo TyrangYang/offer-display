@@ -1,14 +1,15 @@
 import { GridApi } from 'ag-grid-community';
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 interface PageContextType {
-  gridAPI: GridApi | null
   setGridAPI: (newVal: GridApi | null) => void,
+  gridAPI: GridApi | null
   isBackToTopBtnDisplay: boolean,
-  setIsBackToTopBtnDisplay: (newVal: boolean) => void
+  setIsBackToTopBtnDisplay: Dispatch<SetStateAction<boolean>>
 }
+
 export const PageContext = createContext<PageContextType>({
   gridAPI: null,
   setGridAPI: () => { },
   isBackToTopBtnDisplay: false,
-  setIsBackToTopBtnDisplay: () => { },
+  setIsBackToTopBtnDisplay: () => false,
 })

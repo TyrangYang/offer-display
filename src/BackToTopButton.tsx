@@ -1,8 +1,13 @@
-import { FC, useContext } from 'react';
-import { PageContext } from './context/context';
+import { FC, memo } from 'react';
+import { GridApi } from 'ag-grid-community';
 
-const BackToTopButton: FC = () => {
-  const { isBackToTopBtnDisplay, gridAPI } = useContext(PageContext)
+
+interface Props {
+  gridAPI: GridApi | null
+  isBackToTopBtnDisplay: boolean,
+}
+
+const BackToTopButton: FC<Props> = ({ isBackToTopBtnDisplay, gridAPI }) => {
   if (!isBackToTopBtnDisplay) return null;
   return (
     <button
@@ -16,4 +21,4 @@ const BackToTopButton: FC = () => {
     </button>
   )
 }
-export default BackToTopButton
+export default memo(BackToTopButton)
