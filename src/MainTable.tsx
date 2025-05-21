@@ -1,12 +1,12 @@
-import { AgGridReact } from "ag-grid-react";
-import { FC, memo } from "react";
-import { normalizeAMEX, normalizeBOA } from "./utility/normalizedData";
-import AMEX_Data from "./JSON/AMEX_Data.json";
-import BOA_Data from "./JSON/BOA_data.json";
-import { ColDef } from "ag-grid-community";
-import LogoRenderer from "./LogoRenderer";
-import { useSetAtom } from "jotai";
-import { backToTopButtonAtom, gridAPIAtom } from "./context/pageContextAtom";
+import { AgGridReact } from 'ag-grid-react';
+import { FC, memo } from 'react';
+import { normalizeAMEX, normalizeBOA } from './utility/normalizedData';
+import AMEX_Data from './JSON/AMEX_Data.json';
+import BOA_Data from './JSON/BOA_data.json';
+import { ColDef } from 'ag-grid-community';
+import LogoRenderer from './LogoRenderer';
+import { useSetAtom } from 'jotai';
+import { backToTopButtonAtom, gridAPIAtom } from './context/pageContextAtom';
 
 const MainTable: FC = () => {
   const setIsBackToTopBtnDisplay = useSetAtom(backToTopButtonAtom);
@@ -15,12 +15,12 @@ const MainTable: FC = () => {
   const data = [...normalizeAMEX(AMEX_Data), ...normalizeBOA(BOA_Data)];
   const columnDefs: ColDef[] = [
     {
-      field: "logo",
+      field: 'logo',
       cellRenderer: LogoRenderer,
       flex: 1,
     },
-    { field: "name", flex: 1 },
-    { field: "source", flex: 1 },
+    { field: 'name', flex: 1 },
+    { field: 'source', flex: 1 },
     // { field: 'category', flex: 1 },
     // { field: 'type', flex: 1 },
     // {
@@ -36,9 +36,9 @@ const MainTable: FC = () => {
     //     },
     // },
     // { field: 'status', flex: 1 },
-    { field: "description", flex: 3 },
-    { field: "startDate", flex: 1, cellDataType: "date" },
-    { field: "daysLeft", flex: 1 },
+    { field: 'description', flex: 3, wrapText: true },
+    // { field: 'startDate', flex: 1, cellDataType: 'date' },
+    { field: 'daysLeft', flex: 1 },
   ];
 
   const showBackToTopBtnLen = data.length * 0.1;
@@ -46,7 +46,7 @@ const MainTable: FC = () => {
   return (
     <div
       className="ag-theme-quartz" // applying the Data Grid theme
-      style={{ height: "100%" }} // the Data Grid will fill the size of the parent container
+      style={{ height: '100%' }} // the Data Grid will fill the size of the parent container
     >
       <AgGridReact
         rowData={data}
@@ -57,7 +57,7 @@ const MainTable: FC = () => {
           filter: true,
         }}
         onBodyScroll={(event) => {
-          if (event.direction === "vertical") {
+          if (event.direction === 'vertical') {
             const lastIdx = event.api.getLastDisplayedRowIndex();
             if (lastIdx > showBackToTopBtnLen) {
               setIsBackToTopBtnDisplay((prev) => {
@@ -78,7 +78,7 @@ const MainTable: FC = () => {
           setGridAPI(event.api);
         }}
         rowSelection={{
-          mode: "multiRow",
+          mode: 'multiRow',
         }}
       />
     </div>
