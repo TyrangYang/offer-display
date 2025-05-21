@@ -1,15 +1,17 @@
 import { AgGridReact } from "ag-grid-react";
-import { Dispatch, FC, memo, SetStateAction } from "react";
-import { normalizeAMEX, normalizeBOA } from "./data/normalizedData";
-import AMEX_Data from "./data/AMEX_Data.json";
-import BOA_Data from "./data/BOA_data.json";
-import { ColDef, GridApi } from "ag-grid-community";
+import { FC, memo } from "react";
+import { normalizeAMEX, normalizeBOA } from "./utility/normalizedData";
+import AMEX_Data from "./JSON/AMEX_Data.json";
+import BOA_Data from "./JSON/BOA_data.json";
+import { ColDef } from "ag-grid-community";
 import LogoRenderer from "./LogoRenderer";
-interface Props {
-  setGridAPI: (newVal: GridApi | null) => void,
-  setIsBackToTopBtnDisplay: Dispatch<SetStateAction<boolean>>
-}
-const MainTable: FC<Props> = ({ setGridAPI, setIsBackToTopBtnDisplay }) => {
+import { useSetAtom } from "jotai";
+import { backToTopButtonAtom, gridAPIAtom } from "./context/pageContextAtom";
+
+const MainTable: FC = () => {
+  const setIsBackToTopBtnDisplay = useSetAtom(backToTopButtonAtom);
+  const setGridAPI = useSetAtom(gridAPIAtom);
+
   const data = [...normalizeAMEX(AMEX_Data), ...normalizeBOA(BOA_Data)];
   const columnDefs: ColDef[] = [
     {
@@ -39,6 +41,8 @@ const MainTable: FC<Props> = ({ setGridAPI, setIsBackToTopBtnDisplay }) => {
     { field: "daysLeft", flex: 1 },
   ];
 
+  const showBackToTopBtnLen = data.length * 0.1;
+
   return (
     <div
       className="ag-theme-quartz" // applying the Data Grid theme
@@ -55,15 +59,14 @@ const MainTable: FC<Props> = ({ setGridAPI, setIsBackToTopBtnDisplay }) => {
         onBodyScroll={(event) => {
           if (event.direction === "vertical") {
             const lastIdx = event.api.getLastDisplayedRowIndex();
-            if (lastIdx > 30) {
-              console.log(lastIdx);
+            if (lastIdx > showBackToTopBtnLen) {
               setIsBackToTopBtnDisplay((prev) => {
                 if (prev === false) return !prev;
                 return prev;
               });
             }
 
-            if (lastIdx <= 30) {
+            if (lastIdx <= showBackToTopBtnLen) {
               setIsBackToTopBtnDisplay((prev) => {
                 if (prev === true) return !prev;
                 return prev;

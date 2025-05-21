@@ -1,7 +1,6 @@
 import { AmexDataType, BoaDataType, DataType } from "../Type";
 
 export const normalizeAMEX = (input: AmexDataType[]): DataType[] => {
-  console.log("amex");
   return input.map((each) => {
     // if (each.fulfillment_type === undefined) console.log(each);
     return {
