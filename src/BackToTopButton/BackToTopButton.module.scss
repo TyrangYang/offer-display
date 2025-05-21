@@ -1,5 +1,6 @@
 .backToTopBtn {
   /* all: unset; */
+  opacity: 0;
   position: absolute;
   bottom: 10px;
   right: 10px;
@@ -15,4 +16,9 @@
 
   z-index: 1000;
   border: none;
+  transition: opacity 0.4s ease;
+
+  &.shows {
+    opacity: 1;
+  }
 }
